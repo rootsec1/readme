@@ -18,7 +18,13 @@ function LoginPage() {
         return <Navigate to={redirect} />;
     }
     return (
-        <Box>
+        <Box
+            direction="row"
+            align="center"
+            style={{
+                height: window.innerHeight,
+                flex: 1
+            }}>
             <div className="login-buttons">
                 <GoogleButton onClick={signInWithGoogle} />
             </div>

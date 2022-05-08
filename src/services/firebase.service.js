@@ -22,19 +22,19 @@ const databaseInstance = getDatabase();
 async function signInWithGoogleUsingFirebase() {
     try {
         const googleAuthProvider = new GoogleAuthProvider();
-        const signInResult = await signInWithPopup(authInstance, googleAuthProvider);
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(signInResult);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const firebaseUser = signInResult.user;
-        console.log(token);
-        console.log(firebaseUser.email);
-        console.log(firebaseUser.displayName);
+        await signInWithPopup(authInstance, googleAuthProvider);
     } catch (error) {
-        console.log('ERROR = ' + error.message.toString());
+        alert(error.message.toString());
     }
 };
+
+export const logOut = async () => {
+    try {
+        await authInstance.signOut();
+    } catch (error) {
+        alert(error.message.toString());
+    }
+}
 
 export const auth = authInstance;
 export const database = databaseInstance;

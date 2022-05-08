@@ -6,7 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createEditor } from 'slate'
 import { Slate, Editable, withReact } from 'slate-react';
 
+import { logOut } from "../../services/firebase.service";
 import { UserContext } from "../../providers/user.provider";
+import { Navigate } from "react-router-dom";
 
 let firebaseDatabase = null;
 
@@ -40,7 +42,10 @@ function EditorPage() {
                 <Text size="large">readme.txt</Text>
                 <div>
                     <Button size="medium" primary label="Save" style={{ marginRight: 8 }} onClick={onSaveButtonClick} />
-                    <Button label="Sign Out" />
+                    <Button label="Sign Out" onClick={() => {
+                        logOut();
+                        window.location = "/";
+                    }} />
                 </div>
             </Header>
         );
@@ -98,8 +103,9 @@ function EditorPage() {
             </div >
         );
     }
-
-    return headerComponent;
+    else {
+        return <Navigate to="/" />;
+    }
 }
 
 export default EditorPage;
