@@ -42,10 +42,11 @@ function EditorPage() {
                 <Text size="large">readme.txt</Text>
                 <div>
                     <Button size="medium" primary label="Save" style={{ marginRight: 8 }} onClick={onSaveButtonClick} />
-                    <Button label="Sign Out" onClick={() => {
-                        logOut();
-                        window.location = "/";
-                    }} />
+                    <Button label="Sign Out"
+                        onClick={async () => {
+                            await logOut();
+                            window.location = "/";
+                        }} />
                 </div>
             </Header>
         );

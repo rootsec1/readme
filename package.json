@@ -8,7 +8,6 @@
     "grommet-icons": "^4.7.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-google-button": "^0.7.2",
     "react-router-dom": "6",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.0.1",
