@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Grommet } from 'grommet'
 
 import LoginPage from "./pages/login";
 import EditorPage from "./pages/editor";
@@ -8,10 +9,12 @@ function App() {
   return (
     <div className="App">
       <UserProvider>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/editor" element={<EditorPage />} />
-        </Routes>
+        <Grommet className="App">
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/editor" element={<EditorPage />} />
+          </Routes>
+        </Grommet>
       </UserProvider>
     </div>
   );
