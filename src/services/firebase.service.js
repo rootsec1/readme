@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -16,6 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const authInstance = getAuth();
+const databaseInstance = getDatabase();
 
 async function signInWithGoogleUsingFirebase() {
     try {
@@ -35,5 +37,6 @@ async function signInWithGoogleUsingFirebase() {
 };
 
 export const auth = authInstance;
+export const database = databaseInstance;
 export const analytics = getAnalytics(app);
 export const signInWithGoogle = signInWithGoogleUsingFirebase;

@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import GoogleButton from 'react-google-button'
 import { signInWithGoogle } from "../../services/firebase.service";
 import { UserContext } from "../../providers/user.provider";
+import { Box } from "grommet";
 
 function LoginPage() {
     const user = useContext(UserContext);
@@ -17,9 +18,11 @@ function LoginPage() {
         return <Navigate to={redirect} />;
     }
     return (
-        <div className="login-buttons">
-            <GoogleButton onClick={signInWithGoogle} />
-        </div>
+        <Box>
+            <div className="login-buttons">
+                <GoogleButton onClick={signInWithGoogle} />
+            </div>
+        </Box>
     );
 }
 
