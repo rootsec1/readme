@@ -11,6 +11,7 @@ import { UserContext } from "../../providers/user.provider";
 import { Navigate } from "react-router-dom";
 
 let firebaseDatabase = null;
+let firstTime = false;
 
 function EditorPage() {
     const user = useContext(UserContext);
@@ -56,6 +57,7 @@ function EditorPage() {
         if (firebaseDatabase && user) {
             const key = ref(firebaseDatabase, `content/${user["uid"]}`);
             onValue(key, (snapshot) => {
+                if (!snapshot) firstTime = true;
                 const data = snapshot.val();
                 if (data) {
                     const jsonData = JSON.parse(data);
@@ -88,7 +90,7 @@ function EditorPage() {
                     >
                         <Editable
                             contentEditable
-                            placeholder="loading..."
+                            placeholder={firstTime ? "start typing..." : "loading..."}
                             autoFocus
                             style={{ fontSize: 14, lineHeight: "1.1em", wordSpacing: "0.1em" }}
                             spellCheck
