@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect, useMemo, useCallback } from "react";
-import { Header, Text, Button } from 'grommet';
+import { Header, Text, Button } from "grommet";
 import { getDatabase, ref, set, onValue } from "firebase/database";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { createEditor } from 'slate'
-import { Slate, Editable, withReact } from 'slate-react';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { createEditor } from "slate"
+import { Slate, Editable, withReact } from "slate-react";
 
 import { logOut } from "../../services/firebase.service";
 import { UserContext } from "../../providers/user.provider";
@@ -26,7 +26,7 @@ function EditorPage() {
         if (firebaseDatabase) {
             try {
                 const formattedTextContent = JSON.stringify(textContent);
-                const key = ref(firebaseDatabase, `content/${user['uid']}`);
+                const key = ref(firebaseDatabase, `content/${user["uid"]}`);
                 await set(key, formattedTextContent);
                 toast.success("🦄 saved");
             }
@@ -54,7 +54,7 @@ function EditorPage() {
 
     useEffect(() => {
         if (firebaseDatabase && user) {
-            const key = ref(firebaseDatabase, `content/${user['uid']}`);
+            const key = ref(firebaseDatabase, `content/${user["uid"]}`);
             onValue(key, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
@@ -79,7 +79,7 @@ function EditorPage() {
                         value={textContent}
                         onChange={value => {
                             const isAstChange = editor.operations.some(
-                                op => 'set_selection' !== op.type
+                                op => "set_selection" !== op.type
                             )
                             if (isAstChange) {
                                 setTextContent(value);
@@ -90,7 +90,7 @@ function EditorPage() {
                             contentEditable
                             placeholder="loading..."
                             autoFocus
-                            style={{ fontSize: 14 }}
+                            style={{ fontSize: 14, lineHeight: "1.1em", wordSpacing: "0.1em" }}
                             spellCheck
                             inputMode="text"
                         />
