@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { Grommet, grommet } from 'grommet'
 
 import LoginPage from "./pages/login";
@@ -33,6 +33,10 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/editor" element={<EditorPage />} />
+            <Route
+              path="*"
+              element={<Navigate to="/" />}
+            />
           </Routes>
         </Grommet>
       </UserProvider>

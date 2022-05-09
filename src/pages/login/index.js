@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { signInWithGoogle } from "../../services/firebase.service";
 import { UserContext } from "../../providers/user.provider";
 import { Box, Button, Text } from "grommet";
+import { GooglePlus } from "grommet-icons";
 
 function LoginPage() {
     const user = useContext(UserContext);
@@ -28,8 +29,8 @@ function LoginPage() {
                 justifyContent: 'center',
             }}>
             <div className="login-buttons">
-                <Text size="large">readme.txt</Text><br /><br />
-                <Button secondary label="Sign in with google" onClick={signInWithGoogle} />
+                <Text size="large">readme.txt</Text>&nbsp;<a style={{ color: "grey" }} href="https://jeffhuang.com/productivity_text_file/" target="_blank" rel="noreferrer">(why?)</a><br /><br />
+                <Button icon={<GooglePlus color="grey" />} secondary label="Sign in with google" onClick={signInWithGoogle} />
             </div>
         </Box>
     );

@@ -39,7 +39,7 @@ function EditorPage() {
     const headerComponent = useMemo(() => {
         return (
             <Header direction="row" flex sticky="scrollUp" style={{ padding: 8 }}>
-                <Text size="large">readme.txt</Text>
+                <Text size="large" style={{ textAlign: "center" }}>readme.txt</Text>
                 <div>
                     <Button size="medium" primary label="Save" style={{ marginRight: 8 }} onClick={onSaveButtonClick} />
                     <Button label="Sign Out"
@@ -59,7 +59,6 @@ function EditorPage() {
                 const data = snapshot.val();
                 if (data) {
                     const jsonData = JSON.parse(data);
-                    console.table(jsonData);
                     setTextContent(jsonData);
                     editor.children = jsonData;
                 }
