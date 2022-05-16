@@ -3,32 +3,22 @@ import { Header, Text, Button } from "grommet";
 import { getDatabase, ref, set, onValue } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createEditor } from "slate"
-import { Slate, Editable, withReact } from "slate-react";
 
 import { logOut } from "../../services/firebase.service";
 import { UserContext } from "../../providers/user.provider";
 import { Navigate } from "react-router-dom";
 
 let firebaseDatabase = null;
-let firstTime = false;
 
 function EditorPage() {
     const user = useContext(UserContext);
-    const editor = useMemo(() => withReact(createEditor()), []);
-
-    const [textContent, setTextContent] = useState([
-        {
-            children: [{ text: "" }],
-        }
-    ]);
+    const [textContent, setTextContent] = useState();
 
     const onSaveButtonClick = useCallback(async () => {
         if (firebaseDatabase) {
             try {
-                const formattedTextContent = JSON.stringify(textContent);
                 const key = ref(firebaseDatabase, `content/${user["uid"]}`);
-                await set(key, formattedTextContent);
+                await set(key, textContent);
                 toast.success("🦄 saved");
             }
             catch (err) {
@@ -57,16 +47,13 @@ function EditorPage() {
         if (firebaseDatabase && user) {
             const key = ref(firebaseDatabase, `content/${user["uid"]}`);
             onValue(key, (snapshot) => {
-                if (!snapshot) firstTime = true;
                 const data = snapshot.val();
                 if (data) {
-                    const jsonData = JSON.parse(data);
-                    setTextContent(jsonData);
-                    editor.children = jsonData;
+                    setTextContent(data);
                 }
             });
         }
-    }, [user, editor]);
+    }, [user]);
 
 
     if (user) {
@@ -76,27 +63,32 @@ function EditorPage() {
             <div>
                 {headerComponent}
                 <div style={{ paddingLeft: 8, paddingRight: 8, paddingTop: 8 }}>
-                    <Slate
-                        editor={editor}
-                        value={textContent}
-                        onChange={value => {
-                            const isAstChange = editor.operations.some(
-                                op => "set_selection" !== op.type
-                            )
-                            if (isAstChange) {
-                                setTextContent(value);
-                            }
+                    <textarea
+                        contentEditable={true}
+                        readOnly={false}
+                        name="editor_content"
+                        defaultValue={textContent}
+                        placeholder="start typing..."
+                        style={{
+                            fontSize: 14,
+                            lineHeight: "1.1em",
+                            wordSpacing: "0.1em",
+                            backgroundColor: "transparent",
+                            border: "none",
+                            outline: "none",
+                            color: "white",
+                            width: "100%",
+                            height: "100vw",
+                            resize: "none",
+                            paddingBottom: "4%"
                         }}
+                        spellCheck
+                        inputMode="text"
+                        onChange={event => setTextContent(event.target.value)}
+                        suppressContentEditableWarning
                     >
-                        <Editable
-                            contentEditable
-                            placeholder={firstTime ? "start typing..." : "loading..."}
-                            autoFocus
-                            style={{ fontSize: 14, lineHeight: "1.1em", wordSpacing: "0.1em" }}
-                            spellCheck
-                            inputMode="text"
-                        />
-                    </Slate>
+                        {textContent}
+                    </textarea>
                 </div>
                 <ToastContainer
                     position="bottom-right"
